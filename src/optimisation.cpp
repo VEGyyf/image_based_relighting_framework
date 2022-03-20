@@ -208,7 +208,7 @@ void Optimisation::computePCAMatrix()
            else
                osstream << "/lighting_conditions/office_room/" << masksTypeGlobal << "/condition_mask" << k << ".png";
 
-            currentMask = imread(osstream.str(), CV_LOAD_IMAGE_COLOR);
+            currentMask = imread(osstream.str(), cv::IMREAD_COLOR);
         }
         else
         {
@@ -221,7 +221,7 @@ void Optimisation::computePCAMatrix()
             {
                 osstream << "/lighting_conditions/office_room/high_freq/residualMask.png";
             }
-            currentMask = imread(osstream.str(), CV_LOAD_IMAGE_COLOR);
+            currentMask = imread(osstream.str(), cv::IMREAD_COLOR);
         }
         currentMask.convertTo(currentMask, CV_32FC3); //Convert the matrix to CV_32FC3 to be able to read the values
         osstream.str("");
@@ -253,7 +253,7 @@ void Optimisation::computePCAMatrix()
 
     //Compute PCA of the projection matrix
     Mat mean;
-    pcaProjectionMatrix = PCA(projectionMatrix, mean, CV_PCA_DATA_AS_COL);
+    pcaProjectionMatrix = PCA(projectionMatrix, mean, 1);//CV_PCA_DATA_AS_COL);
 
     //Project the environment map in the PCA space
     boundingBox = Rect(0,0,1, environmentMapWidthGlobal*environmentMapHeightGlobal);//Column vector
@@ -445,13 +445,13 @@ double functionToOptimise(const column_vector &variablesVector)
             else
                 osstream << "/lighting_conditions/office_room/" << roomTypeGlobal << "/" << masksTypeGlobal << "/condition_mask" << k << ".png";
 
-            currentMask = imread(osstream.str(), CV_LOAD_IMAGE_COLOR);
+            currentMask = imread(osstream.str(), cv::IMREAD_COLOR);
         }
         else
         {
             osstream << "/lighting_conditions/office_room/" << roomTypeGlobal << "/" << masksTypeGlobal << "/residualMask.png";
 
-            currentMask = imread(osstream.str(), CV_LOAD_IMAGE_COLOR);
+            currentMask = imread(osstream.str(), cv::IMREAD_COLOR);
         }
         currentMask.convertTo(currentMask, CV_32FC3); //Convert the matrix to CV_32FC3 to be able to read the values
         osstream.str("");
@@ -537,13 +537,13 @@ double functionToOptimisePCASpace(const column_vector &variablesVector)
             else
                 osstream << "/lighting_conditions/office_room/" << roomTypeGlobal << "/" << masksTypeGlobal << "/condition_mask" << k << ".png";
 
-            currentMask = imread(osstream.str(), CV_LOAD_IMAGE_COLOR);
+            currentMask = imread(osstream.str(), cv::IMREAD_COLOR);
         }
         else
         {
             osstream << "/lighting_conditions/office_room/" << roomTypeGlobal << "/" << masksTypeGlobal << "/residualMask.png";
 
-            currentMask = imread(osstream.str(), CV_LOAD_IMAGE_COLOR);
+            currentMask = imread(osstream.str(), cv::IMREAD_COLOR);
         }
 
         currentMask.convertTo(currentMask, CV_32FC3); //Convert the matrix to CV_32FC3 to be able to read the values

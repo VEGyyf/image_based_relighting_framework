@@ -120,7 +120,7 @@ int loadImages(Mat listOfImages[], unsigned int numberOfImages, string object)
           osstream << "/images/" << file << "0" << i << extension;
        }
 
-       //For 16 bits TIF HDR images, use CV_LOAD_IMAGE_ANYDEPTH to load the image correctly (with values between 0 and 65535)
+       //For 16 bits TIF HDR images, use cv::IMREAD_ANYDEPTH to load the image correctly (with values between 0 and 65535)
      /*  osstream.str("");
        osstream << "/Volumes/My Passport for Mac/Documents/Programmation/C++/build-image-based-relighting-Desktop_Qt_5_3_clang_64bit-Debug/";
        osstream << "images/knight_kneeling_";
@@ -137,7 +137,7 @@ int loadImages(Mat listOfImages[], unsigned int numberOfImages, string object)
           osstream << i << ".png";
        }
 */
-       listOfImages[i] = imread(osstream.str(), CV_LOAD_IMAGE_ANYDEPTH | CV_LOAD_IMAGE_COLOR);
+       listOfImages[i] = imread(osstream.str(), cv::IMREAD_ANYDEPTH | cv::IMREAD_COLOR);
 
        if(!listOfImages[i].data)
        {

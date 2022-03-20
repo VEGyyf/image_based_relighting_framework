@@ -209,7 +209,7 @@ bool FreeFormLightStage::loadReflectanceField()
           osstream << "/images/" << file << "0" << i << extension;
        }
 
-       m_reflectanceField[i] = imread(osstream.str(), CV_LOAD_IMAGE_ANYDEPTH | CV_LOAD_IMAGE_COLOR);
+       m_reflectanceField[i] = imread(osstream.str(), cv::IMREAD_ANYDEPTH | cv::IMREAD_COLOR);
 
        if(!m_reflectanceField[i].data)
        {
@@ -226,7 +226,7 @@ bool FreeFormLightStage::loadReflectanceField()
     //Only one object for Free form acquisition
     osstream << this->getFolderPath() << "/images/free_form/EggFF_mask.png";
 
-    m_objectMask = imread(osstream.str(), CV_LOAD_IMAGE_COLOR);
+    m_objectMask = imread(osstream.str(), cv::IMREAD_COLOR);
 
     if(!m_objectMask.data)
     {
@@ -246,7 +246,7 @@ bool FreeFormLightStage::loadReflectanceField()
 void FreeFormLightStage::removeDarkRoom()
 {
     //Load the dark room picture
-    Mat darkRoom = imread(this->getFolderPath() + "/images/free_form/darkRoom.png", CV_LOAD_IMAGE_COLOR);
+    Mat darkRoom = imread(this->getFolderPath() + "/images/free_form/darkRoom.png", cv::IMREAD_COLOR);
 
     if(!darkRoom.data)
     {
@@ -297,7 +297,7 @@ void FreeFormLightStage::identifyLightsUser(MouseParameters& mouseParameters)
             osstream << "/lighting_conditions/free_form/condition_" << i << ".ppm";
         }
 
-        lightingCondition = imread(osstream.str(), CV_LOAD_IMAGE_COLOR);
+        lightingCondition = imread(osstream.str(), cv::IMREAD_COLOR);
 
         if(!lightingCondition.data)
             cout << "Could not load " << osstream.str() << endl;

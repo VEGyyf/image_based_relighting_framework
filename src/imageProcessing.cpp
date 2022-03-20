@@ -416,7 +416,7 @@ void cropImages(int xStart, int yStart, int xEnd, int yEnd, int numberOfImages)
 
         cout << osstream.str() << endl;
         //listOfImages[k] = loadPFMOpenCV(osstream.str());
-        listOfImages[k] = imread(osstream.str(), CV_LOAD_IMAGE_ANYDEPTH | CV_LOAD_IMAGE_COLOR);
+        listOfImages[k] = imread(osstream.str(), cv::IMREAD_ANYDEPTH | cv::IMREAD_COLOR);
 
         if(!listOfImages[k].data)
         {
@@ -471,7 +471,7 @@ void cropImages(int xStart, int yStart, int xEnd, int yEnd, int numberOfImages)
     //Cropping the mask
     osstream << "/images/free_form/" << "EggFF_" << "mask" << ".png";
     cout << osstream.str() << endl;
-    Mat mask = imread(osstream.str(), CV_LOAD_IMAGE_COLOR);
+    Mat mask = imread(osstream.str(), cv::IMREAD_COLOR);
     osstream.str("");
     result = Mat(mask, boundingBoxResult);
 
@@ -519,7 +519,7 @@ void cropMirrorBallToMatrix()
             file << "0" << imageN<<".JPG";
 
         cout << file.str() << endl;
-        image = imread(file.str(), CV_LOAD_IMAGE_COLOR);
+        image = imread(file.str(), cv::IMREAD_COLOR);
         aux = image(Rect(1173,2389,915,915));
         file.str("");
         file << qApp->applicationDirPath().toStdString() << "/cropped/" << k << ".jpg" ;
@@ -551,7 +551,7 @@ void cropMirrorBallToMatrix()
                 file << imageN <<".jpg";
             cout << file.str() << endl;
 
-            r= imread(file.str(), CV_LOAD_IMAGE_COLOR);
+            r= imread(file.str(), cv::IMREAD_COLOR);
 
             int jm = j-7;
             int im = i-5;

@@ -214,7 +214,7 @@ bool LightStageRelighting::loadReflectanceField()
           osstream << "/images/" << file << "0" << i << extension;
        }
 
-       m_reflectanceField[i] = imread(osstream.str(), CV_LOAD_IMAGE_COLOR);
+       m_reflectanceField[i] = imread(osstream.str(), cv::IMREAD_COLOR);
 
        if(!m_reflectanceField[i].data)
        {
@@ -230,7 +230,7 @@ bool LightStageRelighting::loadReflectanceField()
     //Load the mask
     osstream << this->getFolderPath() << "/images/light_stage/" << m_object.toStdString() << "_mask.png";
 
-    m_objectMask = imread(osstream.str(), CV_LOAD_IMAGE_COLOR);
+    m_objectMask = imread(osstream.str(), cv::IMREAD_COLOR);
 
     if(!m_objectMask.data)
     {

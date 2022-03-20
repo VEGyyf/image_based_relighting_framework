@@ -324,8 +324,8 @@ bool OfficeRoomRelighting::loadReflectanceField()
        }
        else
        {
-           //For 16 bits TIF HDR images, use CV_LOAD_IMAGE_ANYDEPTH to load the image correctly (with values between 0 and 65535)
-           m_reflectanceField[i] = imread(osstream.str(), CV_LOAD_IMAGE_ANYDEPTH | CV_LOAD_IMAGE_COLOR);
+           //For 16 bits TIF HDR images, use cv::IMREAD_ANYDEPTH to load the image correctly (with values between 0 and 65535)
+           m_reflectanceField[i] = imread(osstream.str(), cv::IMREAD_ANYDEPTH | cv::IMREAD_COLOR);
 
            if(!m_reflectanceField[i].data)
            {
@@ -342,7 +342,7 @@ bool OfficeRoomRelighting::loadReflectanceField()
     //Load the mask
     osstream << this->getFolderPath() << "/images/office_room/" << m_object.toStdString() << "_mask.png";
 
-    m_objectMask = imread(osstream.str(), CV_LOAD_IMAGE_COLOR);
+    m_objectMask = imread(osstream.str(), cv::IMREAD_COLOR);
 
     if(!m_objectMask.data)
     {
@@ -647,7 +647,7 @@ void OfficeRoomRelighting::identifyLightsAutomatically()
         osstream << this->getFolderPath();
         osstream << "/lighting_conditions/office_room/" << m_roomType << "/condition0" << i << ".ppm";
 
-        Mat environmentMap = imread(osstream.str(), CV_LOAD_IMAGE_COLOR);
+        Mat environmentMap = imread(osstream.str(), cv::IMREAD_COLOR);
 
         if(!environmentMap.data)
         {
@@ -689,7 +689,7 @@ void OfficeRoomRelighting::identifyLightsAutomatically()
         //k-means algorithm : create clusters with the points
         //TermCriteria contains the criterion that will stop the k means algorithm
         //Number max of iterations 10000
-        kmeans(samplesLocation, numberOfClusters, labels, TermCriteria(CV_TERMCRIT_ITER|CV_TERMCRIT_EPS, maxIteration, epsilon), numberOfAttempts, KMEANS_PP_CENTERS, centers);
+        kmeans(samplesLocation, numberOfClusters, labels, TermCriteria(TermCriteria::COUNT|TermCriteria::EPS, maxIteration, epsilon), numberOfAttempts, KMEANS_PP_CENTERS, centers);
         std::vector<int> cellsForImagei;
 
         //Add the center of the clusters to the lighting basis
@@ -758,7 +758,7 @@ void OfficeRoomRelighting::identifyMedianEnergy()
         osstream.str("");
 
         osstream << this->getFolderPath() << "/lighting_conditions/office_room/" << m_roomType << "/condition0" << k << ".ppm";
-        Mat lightingConditionToSave = imread(osstream.str(), CV_LOAD_IMAGE_COLOR);
+        Mat lightingConditionToSave = imread(osstream.str(), cv::IMREAD_COLOR);
         osstream.str("");
 
         for(unsigned int i = 0 ; i<m_environmentMapHeight ; i++)
@@ -1103,7 +1103,7 @@ void OfficeRoomRelighting::prepareMasks()
 
     osstream << this->getFolderPath() << "/lighting_conditions/office_room/" << m_roomType << "/" << m_masksType.toStdString() << "/condition_mask0" << m_indirectLightPicture << ".png";
 
-    residualMask = imread(osstream.str(), CV_LOAD_IMAGE_COLOR);
+    residualMask = imread(osstream.str(), cv::IMREAD_COLOR);
     bitwise_not(residualMask, residualMaskNot);
     osstream.str("");
 
@@ -1121,7 +1121,7 @@ void OfficeRoomRelighting::prepareMasks()
             else
                 osstream << "/lighting_conditions/office_room/" << m_roomType << "/" << m_masksType.toStdString() << "/condition_mask" << i << ".png";
 
-            currentMask = imread(osstream.str(), CV_LOAD_IMAGE_COLOR);
+            currentMask = imread(osstream.str(), cv::IMREAD_COLOR);
 
             osstream.str("");
             bitwise_and(allMasks, currentMask, allMasks);
@@ -1352,7 +1352,7 @@ void OfficeRoomRelighting::normalizeEnergyBasis(Mat reflectanceField[])
         {
 
             osstream << this->getFolderPath() << "/lighting_conditions/office_room/" << m_roomType << "/" << m_masksType.toStdString() << "/condition_mask0" << i << ".png";
-            currentMask = imread(osstream.str(), CV_LOAD_IMAGE_GRAYSCALE);
+            currentMask = imread(osstream.str(), cv::IMREAD_GRAYSCALE);
             osstream.str("");
 
             osstream << this->getFolderPath() << "/lighting_conditions/office_room/" << m_roomType << "/directLight0" << i << ".pfm";
@@ -1423,12 +1423,12 @@ std::vector<std::vector<float> > OfficeRoomRelighting::computeWeightsMasks(Mat &
             else
                 osstream << "/lighting_conditions/office_room/" << m_roomType << "/" << m_masksType.toStdString() << "/condition_mask" << k << ".png";
 
-            currentMask = imread(osstream.str(), CV_LOAD_IMAGE_COLOR);
+            currentMask = imread(osstream.str(), cv::IMREAD_COLOR);
         }
         else
         {
             osstream << "/lighting_conditions/office_room/" << m_roomType << "/" << m_masksType.toStdString() << "/residualMask.png";
-            currentMask = imread(osstream.str(), CV_LOAD_IMAGE_COLOR);
+            currentMask = imread(osstream.str(), cv::IMREAD_COLOR);
         }
         currentMask.convertTo(currentMask, CV_32FC3); //Convert the matrix to CV_32FC3 to be able to read the values
         osstream.str("");

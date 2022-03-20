@@ -49,7 +49,7 @@
 #include <vector>
 
 #include <opencv2/core/core.hpp>
-#include <opencv/highgui.h>
+#include <opencv2/highgui.hpp>
 
 /**
 * This function loads the pictures corresponding to the reflectance field of an object.
